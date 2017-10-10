@@ -9,7 +9,7 @@ import java.util.Scanner;
  *
  * @author Lucca Peregrino
  */
-public class ONP{
+class ONP{
     static class pilha{
         private int dados[];
         private int topo;
