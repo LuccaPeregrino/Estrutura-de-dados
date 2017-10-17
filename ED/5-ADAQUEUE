@@ -1,4 +1,4 @@
-import java.io.IOException;
+
 import java.util.*;
 
 /*
@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author Lucca Peregrino
  */
-public class main {
+class main {
     public static class No{
         private No ant;
         private int conteudo;
@@ -56,9 +56,10 @@ public class main {
         }
         
         public void reverse() {
+        if(tamanho == 0) return;
         No aux = inicio;
         inicio = fim;
-        inicio = fim;
+        fim = aux;
         isReversed = !isReversed;
         }
         
@@ -73,29 +74,8 @@ public class main {
             return tamanho;
         }
         
-        /** Obtém o i-ésimo elemento de uma lista
-        Retorna o valor encontrado. */
-        public int elemento (int pos) {
-            
-            No aux = inicio;
-            int cont = 1;
-            if (vazia()) return -1; // Consulta falhou
-
-            if ((pos < 1) || (pos > tamanho))
-                return -1; // Posicao invalida
-            
-            // Percorre a lista do 1o elemento até pos
-            while (cont < pos){
-                aux = aux.getProximo();
-                cont++;
-            }
-        return aux.getConteudo();
-
-}
-        
-        
        
-        /** Insere nó em lista vazia */
+        
         private void insereInicioLista(String valor) {
             int n = Integer.parseInt(valor);
            
@@ -169,10 +149,6 @@ public class main {
         
         /** Remove elemento do início da lista */
         public void removeInicioLista() throws Exception {
-        //If the queue is empty, throw an exception
-        if (tamanho == 0) {
-            throw new Exception("Empty queue");
-        }
         
         //If the queue is reversed, then unreverse it and remove the element at the end
         if (isReversed) {
@@ -183,6 +159,9 @@ public class main {
         
         //If it's not, then just remove the element at the front
         else{
+            if(tamanho == 0){
+                    System.out.println("No job for Ada?");
+            }else{
             int aux2 = inicio.getConteudo();
             if (tamanho == 1) {
                 inicio = null;
@@ -198,18 +177,13 @@ public class main {
             tamanho--;
             System.out.println(aux2);
         }
-        
-        //Reverse the queue back
+        }
     }
         
 
         // Remove elemento do fim da lista
         public void removeFimLista() throws Exception {
-        //If the queue is empty, throw an exception
-        if (tamanho == 0) {
-            throw new Exception("Empty queue");
-        }
-        
+       
         //If the queue is reversed, then unreverse it and remove the element at the front
         if (isReversed) {
             reverse();
@@ -219,6 +193,9 @@ public class main {
         
         //If it's not, then just remove the element at the back
         else {
+            if(tamanho == 0){
+                    System.out.println("No job for Ada?");
+            }else{
             int aux3 = fim.getConteudo();
             if (tamanho == 1) {
                 fim = null;
@@ -234,44 +211,35 @@ public class main {
             tamanho--;
             System.out.println(aux3);
         }
+        }
     }
         
         
         
     }
     
-    public static void main(String[] args) throws IOException, Exception{
+    public static void main(String[] args)throws java.lang.Exception{
         try{
         
         Lista l = new Lista();
         
         
         Scanner s = new Scanner(System.in);
-        Scanner t = new Scanner(System.in);
         String a = new String();
         
         int n = Integer.parseInt(s.nextLine());
         
         for(int i = 0;i<n;i++){
-            a = t.nextLine();
+            a = s.nextLine();
             String[] string  = a.split(" ");
           
             
             if(a.equals("back")){
-                if(l.tamanho != 0){
-                    l.removeFimLista();
-                }else{
-                   System.out.println("No job for Ada?"); 
-                }
-    
+                 l.removeFimLista(); 
             } 
             
             if(a.equals("front")){
-                if(l.tamanho != 0){
-                     l.removeInicioLista();
-                }else{
-                     System.out.println("No job for Ada?");
-                }
+                l.removeInicioLista();
             }
             
             if(string[0].equals("push_back")){
