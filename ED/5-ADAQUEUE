@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.*;
 
 /*
@@ -102,6 +103,8 @@ public class main {
             String aux = Integer.toString(n);    
             reverse();
             insereFimLista(aux);
+            reverse();
+             
             }else{
             // Aloca memoria para um novo no */
             No novoNo = new No();
@@ -123,9 +126,8 @@ public class main {
             
             }
             tamanho++;
-            return;
         }
-            reverse();
+           
     }
         
         /** Insere nó no fim da lista */
@@ -136,6 +138,8 @@ public class main {
             String aux = Integer.toString(n);    
             reverse();
             insereInicioLista(aux);
+            reverse();
+            
             }else{
             // Aloca memoria para um novo no */
             No novoNo = new No();
@@ -157,11 +161,8 @@ public class main {
             
             }
             tamanho++;
-            return;
         }
-            reverse();
-
-        }
+    }
         
        
         
@@ -177,10 +178,12 @@ public class main {
         if (isReversed) {
             reverse();
             removeFimLista();
+            reverse();
         }
         
         //If it's not, then just remove the element at the front
         else{
+            int aux2 = inicio.getConteudo();
             if (tamanho == 1) {
                 inicio = null;
                 fim = null;
@@ -193,12 +196,10 @@ public class main {
             }
             
             tamanho--;
-            return;
+            System.out.println(aux2);
         }
         
         //Reverse the queue back
-        reverse();
-        
     }
         
 
@@ -213,10 +214,12 @@ public class main {
         if (isReversed) {
             reverse();
             removeInicioLista();
+            reverse();
         } 
         
         //If it's not, then just remove the element at the back
         else {
+            int aux3 = fim.getConteudo();
             if (tamanho == 1) {
                 fim = null;
                 inicio = null;
@@ -229,19 +232,17 @@ public class main {
             }
             
             tamanho--;
-            return;
+            System.out.println(aux3);
         }
-        
-        //Reverse the queue back
-        reverse();
-
     }
         
         
         
     }
     
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException, Exception{
+        try{
+        
         Lista l = new Lista();
         
         
@@ -253,39 +254,41 @@ public class main {
         
         for(int i = 0;i<n;i++){
             a = t.nextLine();
-            
+            String[] string  = a.split(" ");
           
             
             if(a.equals("back")){
-                int aux = l.removeFimLista(i);
-                if(aux != -1){
-                    System.out.println(aux);
+                if(l.tamanho != 0){
+                    l.removeFimLista();
                 }else{
-                    
+                   System.out.println("No job for Ada?"); 
                 }
+    
             } 
             
             if(a.equals("front")){
-                int aux = l.removeInicioLista(i);
-                if(aux != -1){
-                    System.out.println(aux);
+                if(l.tamanho != 0){
+                     l.removeInicioLista();
                 }else{
                      System.out.println("No job for Ada?");
                 }
             }
             
-            if(a.substring(0, 8).equals("push_back")){
-                l.insereFimLista(a.substring(10, 11));
+            if(string[0].equals("push_back")){
+                l.insereFimLista(string[1]);
             }
             
-            if(a.substring(0, 6).equals("toFront")){
-                l.insereInicioLista(a.substring(8, 9));
+            if(string[0].equals("toFront")){
+                l.insereInicioLista(string[1]);
             }
             
             if(a.equals("reverse")){
-                l.reverse(l);
+                l.reverse();
             }
+        }
             
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
         
     }
