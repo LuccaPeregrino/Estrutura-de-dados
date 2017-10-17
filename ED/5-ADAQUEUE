@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 /*
@@ -55,14 +54,7 @@ class main {
             tamanho = 0;
         }
         
-        public void reverse() {
-        if(tamanho == 0) return;
-        No aux = inicio;
-        inicio = fim;
-        fim = aux;
-        isReversed = !isReversed;
-        }
-        
+    
         /** Verifica se a Lista está vazia */
         public boolean vazia(){
             if (tamanho == 0 ) return true;
@@ -110,7 +102,7 @@ class main {
            
     }
         
-        /** Insere nó no fim da lista */
+        
         private void insereFimLista(String valor){
             int n = Integer.parseInt(valor);
            
@@ -144,20 +136,17 @@ class main {
         }
     }
         
-       
-        
-        
-        /** Remove elemento do início da lista */
+ 
         public void removeInicioLista() throws Exception {
         
-        //If the queue is reversed, then unreverse it and remove the element at the end
+        
         if (isReversed) {
             reverse();
             removeFimLista();
             reverse();
         }
         
-        //If it's not, then just remove the element at the front
+       
         else{
             if(tamanho == 0){
                     System.out.println("No job for Ada?");
@@ -181,17 +170,17 @@ class main {
     }
         
 
-        // Remove elemento do fim da lista
+      
         public void removeFimLista() throws Exception {
        
-        //If the queue is reversed, then unreverse it and remove the element at the front
+        
         if (isReversed) {
             reverse();
             removeInicioLista();
             reverse();
         } 
         
-        //If it's not, then just remove the element at the back
+       
         else {
             if(tamanho == 0){
                     System.out.println("No job for Ada?");
@@ -213,9 +202,16 @@ class main {
         }
         }
     }
-        
-        
-        
+         public void reverse() {
+        if(tamanho == 0){
+            return;
+        }
+        No aux = inicio;
+        inicio = fim;
+        fim = aux;
+        isReversed = !isReversed;
+        }
+              
     }
     
     public static void main(String[] args)throws java.lang.Exception{
