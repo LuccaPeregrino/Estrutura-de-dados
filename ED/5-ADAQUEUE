@@ -1,5 +1,4 @@
 import java.util.*;
-import java.io.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -32,13 +31,13 @@ public class main {
             return ant;
         }
         public void setAnterior(No a){
-           ant = a;
+            ant = a;
         }
         public No getProximo(){
             return proximo;
         }
         public void setProximo(No p){
-            p = proximo;
+            proximo = p;
         }
         
 }
@@ -47,7 +46,7 @@ public class main {
         private No inicio;
         private No fim;
         private int tamanho;
-        protected boolean reversed = false;
+        private boolean isReversed = false;
         
         public Lista(){
             inicio = null;
@@ -55,6 +54,12 @@ public class main {
             tamanho = 0;
         }
         
+        public void reverse() {
+        No aux = inicio;
+        inicio = fim;
+        inicio = fim;
+        isReversed = !isReversed;
+        }
         
         /** Verifica se a Lista está vazia */
         public boolean vazia(){
@@ -90,242 +95,199 @@ public class main {
         
        
         /** Insere nó em lista vazia */
-        
         private void insereInicioLista(String valor) {
             int n = Integer.parseInt(valor);
-             //Aloca memoria para um novo no */
+           
+            if (isReversed) { 
+            String aux = Integer.toString(n);    
+            reverse();
+            insereFimLista(aux);
+            }else{
+            // Aloca memoria para um novo no */
             No novoNo = new No();
 
             // Insere novo elemento na cabeca da lista
-           novoNo.setConteudo(n);
-            
+            novoNo.setConteudo(n);
             novoNo.setAnterior(null);
-           
 
-            if (vazia()){
+            if (vazia()) {
+                novoNo.setProximo(null);
                 inicio = novoNo;
                 fim = novoNo;
+                
             }
             else{
-                novoNo.setProximo(inicio);
+               novoNo.setProximo(inicio);
+                inicio.setAnterior(novoNo);
                 inicio = novoNo;
-            }
             
+            }
             tamanho++;
-            
-
+            return;
+        }
+            reverse();
     }
-        public void removeInicioLista(){
-            
-            if(reversed){
-                reverse();
-                removeFimLista();
-                reverse();
-            }else{
-            
-                if(tamanho == 0){
-                    System.out.println("No job for Ada?");
-                }else{
-                    int aux = inicio.getConteudo();
-                    No p = inicio;
-
-                    if(inicio == fim){
-                        inicio = null;
-                        fim = null;
-                    }else{
-                        inicio = p.getProximo();
-                        p.setProximo(null);
-                        inicio.setAnterior(null);
-                    }
-
-                    p = null;
-                    tamanho--;
-                    System.out.println(aux);
-                }
-            }
-        }
-        public void removeFimLista(){
-            
-            if(reversed){
-                reverse();
-                removeInicioLista();
-                reverse();
-            }else{
-            
-                if(tamanho == 0){
-                    System.out.println("No job for Ada?");
-                }else{
-                    int aux = fim.getConteudo();
-                    No p = fim;
-
-                    if(inicio == fim){
-                        inicio = null;
-                        fim = null;
-                    }else{
-                        fim = p.getAnterior();
-                        fim.setProximo(null);
-                    }
-
-                    p = null;
-                    tamanho--;
-                    System.out.println(aux);
-                }
-            }
-        }
-    
         
         /** Insere nó no fim da lista */
-        //private void insereFimLista(String valor){
-         //   int n = Integer.parseInt(valor);
-        //    No novoNo = new No();
-         //   novoNo.setConteudo(n);
-            
-            // Procura o final da lista
-        //    No aux = inicio;
-         //  while(aux.getProximo() != null){
-        //        aux = aux.getProximo();
-        //    }
-
-        //   novoNo.setProximo(null);
-        //   aux.setProximo(novoNo);
-        //    novoNo.setAnterior(fim);
-        //    fim.setProximo(novoNo);
-        //    fim = novoNo;
-         //   this.tamanho++;
-
-        //}
-        public void insereFimLista(String s){
-            int numb = Integer.parseInt(s);
-            No newNo = new No();
-            newNo.setConteudo(numb);
-            
-            if(reversed){
-                reverse();
-                insereInicioLista(s);
-                reverse();
+        private void insereFimLista(String valor){
+            int n = Integer.parseInt(valor);
+           
+            if (isReversed) { 
+            String aux = Integer.toString(n);    
+            reverse();
+            insereInicioLista(aux);
             }else{
-                if(tamanho == 0){
-                    inicio = newNo;
-                }else{
-                    newNo.setAnterior(fim);
-                    fim.setProximo(newNo);
-                }
+            // Aloca memoria para um novo no */
+            No novoNo = new No();
 
-                fim = newNo;
-                tamanho++;
+            // Insere novo elemento na cabeca da lista
+            novoNo.setConteudo(n);
+            novoNo.setProximo(null);
+
+            if (vazia()) {
+                novoNo.setAnterior(null);
+                inicio = novoNo;
+                fim = novoNo;
+                
             }
+            else{
+               novoNo.setAnterior(fim);
+                fim.setProximo(novoNo);
+                fim = novoNo;
+            
+            }
+            tamanho++;
+            return;
+        }
+            reverse();
+
         }
         
-        // Remove um elemento de uma determinada posição
+       
         
         
-        // Remove elemento do início da lista
-        //private int removeInicioListaUnitaria(){
-        //    int dado = inicio.getConteudo();
-        //    inicio = null;
-        //    fim = null;
-        //    tamanho--;
-        //    return dado;
-        //}
-        
-        
-
         /** Remove elemento do início da lista */
-        /*private int removeInicioLista(){
-            No p = inicio;
-            int dado = p.getConteudo();
-            // Retira o 1o elemento da lista (p)
-            inicio = p.getProximo();
-            p.getProximo().setAnterior(null);
-            tamanho--;
-            // Sugere ao garbage collector que libere a
-            // memoria da regiao apontada por p
-            p = null;
-            return dado;
-        }*/
+        public void removeInicioLista() throws Exception {
+        //If the queue is empty, throw an exception
+        if (tamanho == 0) {
+            throw new Exception("Empty queue");
+        }
         
-        // Remove elemento do início da lista
-        /*private int removeMeioLista(int pos){
-            No p = inicio;
-            int n = 1;
-
-            while((n <= pos-1) && (p != null)){
-                p = p.getProximo(); n++;
+        //If the queue is reversed, then unreverse it and remove the element at the end
+        if (isReversed) {
+            reverse();
+            removeFimLista();
+        }
+        
+        //If it's not, then just remove the element at the front
+        else{
+            if (tamanho == 1) {
+                inicio = null;
+                fim = null;
+            } else {
+                No aux = inicio;
+                inicio = inicio.getProximo();
+                inicio.setAnterior(null);
+                aux = null;
+                
             }
-
-            if (p == null) return -1; // pos. inválida
-            int dado = p.getConteudo();
-            p.getAnterior().setProximo(p.getProximo());
-            p.getProximo().setAnterior(p.getAnterior());
+            
             tamanho--;
-            p = null;
-            return dado;
-        }*/
+            return;
+        }
+        
+        //Reverse the queue back
+        reverse();
+        
+    }
+        
 
         // Remove elemento do fim da lista
-        /*private int removeFimLista(){
-            No p = fim;
-            int dado = p.getConteudo();
-
-            fim.getAnterior().setProximo(null);
-            fim = fim.getAnterior();
-            tamanho--;
-
-            p = null;
-            return dado;
-        }*/
-        
-        public void reverse(){
-           if(tamanho == 0) return;
-           
-           No aux = inicio;
-           inicio = fim;
-           fim = aux;
-         reversed =  !reversed;  
+        public void removeFimLista() throws Exception {
+        //If the queue is empty, throw an exception
+        if (tamanho == 0) {
+            throw new Exception("Empty queue");
         }
-           
-      
+        
+        //If the queue is reversed, then unreverse it and remove the element at the front
+        if (isReversed) {
+            reverse();
+            removeInicioLista();
+        } 
+        
+        //If it's not, then just remove the element at the back
+        else {
+            if (tamanho == 1) {
+                fim = null;
+                inicio = null;
+               
+            } else {
+                No aux = fim;
+                fim = fim.getAnterior();
+                fim.setProximo(null);
+                aux = null;
+            }
+            
+            tamanho--;
+            return;
+        }
+        
+        //Reverse the queue back
+        reverse();
+
+    }
+        
+        
         
     }
     
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args){
         Lista l = new Lista();
         
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        int length = Integer.parseInt(in.readLine());
-            
-        for(int i = 0;i<length;i++){
-           String b = in.readLine();
-                //queue.command(a);
-                String[] parts = b.split(" ");
+        
+        Scanner s = new Scanner(System.in);
+        Scanner t = new Scanner(System.in);
+        String a = new String();
+        
+        int n = Integer.parseInt(s.nextLine());
+        
+        for(int i = 0;i<n;i++){
+            a = t.nextLine();
             
           
             
-            if(parts[0].equals("back")){
-               l.removeFimLista();
-                
+            if(a.equals("back")){
+                int aux = l.removeFimLista(i);
+                if(aux != -1){
+                    System.out.println(aux);
+                }else{
+                    
+                }
             } 
             
-            if(parts[0].equals("front")){
-                l.removeInicioLista();
-                
+            if(a.equals("front")){
+                int aux = l.removeInicioLista(i);
+                if(aux != -1){
+                    System.out.println(aux);
+                }else{
+                     System.out.println("No job for Ada?");
+                }
             }
             
-            if(parts[0].equals("push_back")){
-                l.insereFimLista(parts[1]);
+            if(a.substring(0, 8).equals("push_back")){
+                l.insereFimLista(a.substring(10, 11));
             }
             
-            if(parts[0].equals("toFront")){
-                l.insereInicioLista(parts[1]);
+            if(a.substring(0, 6).equals("toFront")){
+                l.insereInicioLista(a.substring(8, 9));
             }
             
-            if(parts[0].equals("reverse")){
-                l.reverse();
+            if(a.equals("reverse")){
+                l.reverse(l);
             }
-          }
             
         }
         
     }
     
-
+}
