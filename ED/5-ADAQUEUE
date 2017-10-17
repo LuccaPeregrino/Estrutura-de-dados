@@ -1,0 +1,331 @@
+import java.util.*;
+import java.io.*;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Lucca Peregrino
+ */
+public class main {
+    public static class No{
+        private No ant;
+        private int conteudo;
+        private No proximo;
+
+        public No(){
+            ant = null;
+            proximo = null;
+        }
+        
+        public int getConteudo(){
+            return conteudo;
+        }
+        public void setConteudo(int c){
+            conteudo = c;
+        }
+        public No getAnterior(){
+            return ant;
+        }
+        public void setAnterior(No a){
+           ant = a;
+        }
+        public No getProximo(){
+            return proximo;
+        }
+        public void setProximo(No p){
+            p = proximo;
+        }
+        
+}
+    
+    public static class Lista{
+        private No inicio;
+        private No fim;
+        private int tamanho;
+        protected boolean reversed = false;
+        
+        public Lista(){
+            inicio = null;
+            fim = null;
+            tamanho = 0;
+        }
+        
+        
+        /** Verifica se a Lista está vazia */
+        public boolean vazia(){
+            if (tamanho == 0 ) return true;
+            else return false;
+        }
+        
+        /**Obtém o tamanho da Lista*/
+        public int tamanho() {
+            return tamanho;
+        }
+        
+        /** Obtém o i-ésimo elemento de uma lista
+        Retorna o valor encontrado. */
+        public int elemento (int pos) {
+            
+            No aux = inicio;
+            int cont = 1;
+            if (vazia()) return -1; // Consulta falhou
+
+            if ((pos < 1) || (pos > tamanho))
+                return -1; // Posicao invalida
+            
+            // Percorre a lista do 1o elemento até pos
+            while (cont < pos){
+                aux = aux.getProximo();
+                cont++;
+            }
+        return aux.getConteudo();
+
+}
+        
+        
+       
+        /** Insere nó em lista vazia */
+        
+        private void insereInicioLista(String valor) {
+            int n = Integer.parseInt(valor);
+             //Aloca memoria para um novo no */
+            No novoNo = new No();
+
+            // Insere novo elemento na cabeca da lista
+           novoNo.setConteudo(n);
+            
+            novoNo.setAnterior(null);
+           
+
+            if (vazia()){
+                inicio = novoNo;
+                fim = novoNo;
+            }
+            else{
+                novoNo.setProximo(inicio);
+                inicio = novoNo;
+            }
+            
+            tamanho++;
+            
+
+    }
+        public void removeInicioLista(){
+            
+            if(reversed){
+                reverse();
+                removeFimLista();
+                reverse();
+            }else{
+            
+                if(tamanho == 0){
+                    System.out.println("No job for Ada?");
+                }else{
+                    int aux = inicio.getConteudo();
+                    No p = inicio;
+
+                    if(inicio == fim){
+                        inicio = null;
+                        fim = null;
+                    }else{
+                        inicio = p.getProximo();
+                        p.setProximo(null);
+                        inicio.setAnterior(null);
+                    }
+
+                    p = null;
+                    tamanho--;
+                    System.out.println(aux);
+                }
+            }
+        }
+        public void removeFimLista(){
+            
+            if(reversed){
+                reverse();
+                removeInicioLista();
+                reverse();
+            }else{
+            
+                if(tamanho == 0){
+                    System.out.println("No job for Ada?");
+                }else{
+                    int aux = fim.getConteudo();
+                    No p = fim;
+
+                    if(inicio == fim){
+                        inicio = null;
+                        fim = null;
+                    }else{
+                        fim = p.getAnterior();
+                        fim.setProximo(null);
+                    }
+
+                    p = null;
+                    tamanho--;
+                    System.out.println(aux);
+                }
+            }
+        }
+    
+        
+        /** Insere nó no fim da lista */
+        //private void insereFimLista(String valor){
+         //   int n = Integer.parseInt(valor);
+        //    No novoNo = new No();
+         //   novoNo.setConteudo(n);
+            
+            // Procura o final da lista
+        //    No aux = inicio;
+         //  while(aux.getProximo() != null){
+        //        aux = aux.getProximo();
+        //    }
+
+        //   novoNo.setProximo(null);
+        //   aux.setProximo(novoNo);
+        //    novoNo.setAnterior(fim);
+        //    fim.setProximo(novoNo);
+        //    fim = novoNo;
+         //   this.tamanho++;
+
+        //}
+        public void insereFimLista(String s){
+            int numb = Integer.parseInt(s);
+            No newNo = new No();
+            newNo.setConteudo(numb);
+            
+            if(reversed){
+                reverse();
+                insereInicioLista(s);
+                reverse();
+            }else{
+                if(tamanho == 0){
+                    inicio = newNo;
+                }else{
+                    newNo.setAnterior(fim);
+                    fim.setProximo(newNo);
+                }
+
+                fim = newNo;
+                tamanho++;
+            }
+        }
+        
+        // Remove um elemento de uma determinada posição
+        
+        
+        // Remove elemento do início da lista
+        //private int removeInicioListaUnitaria(){
+        //    int dado = inicio.getConteudo();
+        //    inicio = null;
+        //    fim = null;
+        //    tamanho--;
+        //    return dado;
+        //}
+        
+        
+
+        /** Remove elemento do início da lista */
+        /*private int removeInicioLista(){
+            No p = inicio;
+            int dado = p.getConteudo();
+            // Retira o 1o elemento da lista (p)
+            inicio = p.getProximo();
+            p.getProximo().setAnterior(null);
+            tamanho--;
+            // Sugere ao garbage collector que libere a
+            // memoria da regiao apontada por p
+            p = null;
+            return dado;
+        }*/
+        
+        // Remove elemento do início da lista
+        /*private int removeMeioLista(int pos){
+            No p = inicio;
+            int n = 1;
+
+            while((n <= pos-1) && (p != null)){
+                p = p.getProximo(); n++;
+            }
+
+            if (p == null) return -1; // pos. inválida
+            int dado = p.getConteudo();
+            p.getAnterior().setProximo(p.getProximo());
+            p.getProximo().setAnterior(p.getAnterior());
+            tamanho--;
+            p = null;
+            return dado;
+        }*/
+
+        // Remove elemento do fim da lista
+        /*private int removeFimLista(){
+            No p = fim;
+            int dado = p.getConteudo();
+
+            fim.getAnterior().setProximo(null);
+            fim = fim.getAnterior();
+            tamanho--;
+
+            p = null;
+            return dado;
+        }*/
+        
+        public void reverse(){
+           if(tamanho == 0) return;
+           
+           No aux = inicio;
+           inicio = fim;
+           fim = aux;
+         reversed =  !reversed;  
+        }
+           
+      
+        
+    }
+    
+    public static void main(String[] args) throws IOException{
+        Lista l = new Lista();
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int length = Integer.parseInt(in.readLine());
+            
+        for(int i = 0;i<length;i++){
+           String b = in.readLine();
+                //queue.command(a);
+                String[] parts = b.split(" ");
+            
+          
+            
+            if(parts[0].equals("back")){
+               l.removeFimLista();
+                
+            } 
+            
+            if(parts[0].equals("front")){
+                l.removeInicioLista();
+                
+            }
+            
+            if(parts[0].equals("push_back")){
+                l.insereFimLista(parts[1]);
+            }
+            
+            if(parts[0].equals("toFront")){
+                l.insereInicioLista(parts[1]);
+            }
+            
+            if(parts[0].equals("reverse")){
+                l.reverse();
+            }
+          }
+            
+        }
+        
+    }
+    
+
